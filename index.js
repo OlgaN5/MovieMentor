@@ -1,0 +1,15 @@
+const express = require('express')
+require('dotenv').config()
+const router = require('./routes/index.router')
+const User = require('./models/user')
+const app = express()
+const port = process.env.port || 4000
+const db = require('./config/database')
+app.use(express.json())
+app.listen(port, () => console.log(`Server started on port ${port}`))
+db.authenticate()
+    .then(() => console.log('DB connected'))
+    .catch((err) => console.log(err.message))
+User.sync().then(() => console.log('User Model synced'))
+
+app.use('/api', router)

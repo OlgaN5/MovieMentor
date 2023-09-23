@@ -1,6 +1,6 @@
 const registerService = require('../services/register.service')
 const bcrypt = require('bcrypt')
-
+const Sentry = require('@sentry/node')
 class registerController {
     async register(req, res) {
         try {
@@ -31,7 +31,7 @@ class registerController {
             })
             res.send(user)
         } catch (e) {
-            console.log(e.message)
+            Sentry.captureException(e)
         }
     }
 }

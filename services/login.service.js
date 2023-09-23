@@ -1,5 +1,5 @@
 const accessToDatabase = require('../utils/accessToDatabase')
-const User = require('../models/user')
+const {User} = require('../models/associations')
 class loginService {
     async getUser(login, email) {
         if (login) {

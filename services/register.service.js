@@ -1,5 +1,5 @@
 const accessToDatabase = require('../utils/accessToDatabase')
-const User = require('../models/user')
+const {User} = require('../models/associations')
 class registerService {
     async createUser(user) {        
         return await accessToDatabase.create(User,user)

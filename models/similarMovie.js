@@ -15,7 +15,12 @@ const SimilarMovie = db.define('similarMovie', {
     movieId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        unique: true
+        unique: false
+    },
+    similarMovieId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        unique: false
     }
 })
 module.exports = SimilarMovie

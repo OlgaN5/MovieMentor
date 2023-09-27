@@ -1,11 +1,15 @@
 const accessToDatabase = require('../utils/accessToDatabase')
-const {User} = require('../models/associations')
+const {
+    User
+} = require('../models/associations')
 class registerService {
-    async createUser(user) {        
-        return await accessToDatabase.create(User,user)
+    async createUser(user) {
+        console.log(user)
+        return await accessToDatabase.create(User, user)
     }
-    async findUserByProperty(nameProperty, valueProperty) {
-        return await accessToDatabase.readOne(User, nameProperty, valueProperty)
+    async findUserByConditions(conditionsEmail) {
+
+        return await accessToDatabase.readOne(User, conditionsEmail)
     }
 }
 

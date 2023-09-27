@@ -9,7 +9,7 @@ const WatchList = db.define('watchList', {
     movieId: {
         type: Sequelize.INTEGER,
         allowNull:false,
-        unique: true
+        unique: false
     },
     status: {
         type: Sequelize.STRING,

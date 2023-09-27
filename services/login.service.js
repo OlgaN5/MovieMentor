@@ -3,10 +3,16 @@ const {User} = require('../models/associations')
 class loginService {
     async getUser(login, email) {
         if (login) {
-            return await accessToDatabase.readOne(User, 'login', login)
+            const conditions = {
+                login
+            }
+            return await accessToDatabase.readOne(User, conditions)
         }
         if (email) {
-            return await accessToDatabase.readOne(User, 'email', email)
+            const conditions = {
+                email
+            }
+            return await accessToDatabase.readOne(User, conditions)
         }
     }
 }

@@ -1,28 +1,37 @@
 const User = require('../models/user')
+const {
+    Movie,
+    SimilarMovie
+} = require('../models/associations')
+const {
+    sign
+} = require('jsonwebtoken')
 class AccessToDatabase {
     async create(Model, value) {
-        // console.log(Model, value)
         return await Model.create(value)
     }
-    async readOne(Model, nameProperty, valueProperty) {
-        const user = await Model.findOne({
-            where: {
-                [nameProperty]: valueProperty
-            }
+    async readOne(Model, conditions) {
+        const element = await Model.findOne({
+            where: conditions,
+            raw: true
         })
-        return user
+        return element
     }
-    async readAll(Model, nameProperty, valueProperty) {
-        return await Model.findAll({
-            where: {
-                [nameProperty]: valueProperty
-            }
+    async readAllSimilar(conditions) {
+         const movies = await SimilarMovie.findAll({
+            where: conditions,
+            include: {                
+                foreignKey: 'similarMovieId',
+                model: Movie,
+                attributes: ['title'],
+            },
+            attributes: [],
+            raw: true
         })
+        return movies
     }
-    async updateById(Model, id, nameProperty, valueProperty) {
-        return Model.update({
-            [nameProperty]: valueProperty
-        }, {
+    async updateById(Model, id, dataToChange) {
+        return await Model.update(dataToChange, {
             where: {
                 id: id
             }

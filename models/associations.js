@@ -17,15 +17,33 @@ WatchList.belongsTo(Movie, {
     foreignKey: 'movieId'
 })
 
-User.belongsToMany(Movie, {
-    through: "similarMovie",
-    foreignKey: 'userId',
-    // otherKey: 'movieId'
+// User.belongsToMany(Movie, {
+//     through: "similarMovie",
+//     foreignKey: 'userId',
+//     // otherKey: 'movieId'
+// })
+// Movie.belongsToMany(User, {
+//     through: "similarMovie",
+//     foreignKey: 'movieId',
+//     // otherKey: 'userId'
+// })
+User.hasMany(SimilarMovie, {
+    foreignKey: 'userId'
 })
-Movie.belongsToMany(User, {
-    through: "similarMovie",
-    foreignKey: 'movieId',
-    // otherKey: 'userId'
+SimilarMovie.belongsTo(User, {
+    foreignKey: 'userId'
+})
+Movie.hasMany(SimilarMovie, {
+    foreignKey: 'similarMovieId'
+})
+SimilarMovie.belongsTo(Movie, {
+    foreignKey: 'similarMovieId'
+})
+Movie.hasMany(SimilarMovie, {
+    foreignKey: 'movieId'
+})
+SimilarMovie.belongsTo(Movie, {
+    foreignKey: 'movieId'
 })
 
 

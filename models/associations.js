@@ -2,54 +2,51 @@ const User = require('./user')
 const Movie = require('./movie')
 const WatchList = require('./watchList')
 const SimilarMovie = require('./similarMovie')
+const Status = require('./status')
 
+Status.hasMany(WatchList,{
+    foreignKey: 'statusId'
+})
+WatchList.belongsTo(Status,{
+    foreignKey: 'statusId'
+})
 User.hasMany(WatchList, {
     foreignKey: 'userId'
 })
 WatchList.belongsTo(User, {
     foreignKey: 'userId'
 })
-
 Movie.hasMany(WatchList, {
     foreignKey: 'movieId'
 })
 WatchList.belongsTo(Movie, {
     foreignKey: 'movieId'
 })
-
-// User.belongsToMany(Movie, {
-//     through: "similarMovie",
-//     foreignKey: 'userId',
-//     // otherKey: 'movieId'
-// })
-// Movie.belongsToMany(User, {
-//     through: "similarMovie",
-//     foreignKey: 'movieId',
-//     // otherKey: 'userId'
-// })
 User.hasMany(SimilarMovie, {
     foreignKey: 'userId'
 })
 SimilarMovie.belongsTo(User, {
     foreignKey: 'userId'
 })
-Movie.hasMany(SimilarMovie, {
-    foreignKey: 'similarMovieId'
+WatchList.hasMany(SimilarMovie, {
+    foreignKey: 'watchListId'
 })
-SimilarMovie.belongsTo(Movie, {
-    foreignKey: 'similarMovieId'
+SimilarMovie.belongsTo(WatchList, {
+    foreignKey: 'watchListId'
 })
-Movie.hasMany(SimilarMovie, {
-    foreignKey: 'movieId'
+Movie.hasMany(SimilarMovie,{
+    foreignKey:'movieId'
 })
-SimilarMovie.belongsTo(Movie, {
-    foreignKey: 'movieId'
+SimilarMovie.belongsTo(Movie,{
+    foreignKey:'movieId'
 })
+
 
 
 module.exports = {
     User,
     Movie,
     SimilarMovie,
-    WatchList
+    WatchList,
+    Status
 }

@@ -17,13 +17,13 @@ const validationQuery = [
     query('movieName').notEmpty().escape().isString().trim()
 ]
 const validationParam = [
-    param('movieId').notEmpty().isInt(),
+    param('movieId').notEmpty().isString(),
 ]
 const validationStatus = [
-    body('status').notEmpty().isString().isIn('watched', 'want to watch').withMessage('invalid value of status')
+    body('statusId').notEmpty().isInt()
 ]
 const validationBodyMovieId = [
-    body('movieId').notEmpty().isInt()
+    body('similarMovieId').notEmpty().isString()
 ]
 
 
@@ -49,7 +49,7 @@ const validationBodyMovieId = [
  *         movieId: 
  *           type: string
  *           default: 1
- *         status:
+ *         statusId:
  *           type: string
  *           default: want to watch
  * /api/movies/create:
@@ -139,7 +139,7 @@ router.post('/watchlist', validationStatus, authenticate, movieController.addWat
  *           schema:
  *             type: object
  *             properties:
- *               status:
+ *               statusId:
  *                 type: string
  *                 default: watched
  *     responses:
@@ -169,7 +169,7 @@ router.patch('/watchList/:movieId', validationParam, validationStatus, authentic
  *           schema: 
  *             type: object
  *             properties: 
- *               movieId:
+ *               similarMovieId:
  *                 type: string
  *                 default: 1
  *     responses:

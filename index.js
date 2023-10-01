@@ -9,7 +9,8 @@ const {
     User,
     Movie,
     WatchList,
-    SimilarMovie
+    SimilarMovie,
+    Status
 } = require('./models/associations')
 const db = require('./config/database')
 
@@ -60,6 +61,7 @@ User.sync().then(() => console.log('User Model synced'))
 Movie.sync().then(() => console.log('Movie Model synced'))
 WatchList.sync().then(() => console.log('WatchList Model synced')).catch((e) => console.log(e.message))
 SimilarMovie.sync().then(() => console.log('SimilarList Model synced')).catch((e) => console.log(e.message))
+Status.sync().then(() => console.log('Status Model synced')).catch((e) => console.log(e.message))
 
 Sentry.init({
     dsn: process.env.DSN,

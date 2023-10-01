@@ -12,12 +12,12 @@ const SimilarMovie = db.define('similarMovie', {
         allowNull: false,
         unique: false
     },
-    movieId: {
+    watchListId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: false
     },
-    similarMovieId: {
+    movieId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         unique: false

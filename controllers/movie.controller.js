@@ -40,7 +40,7 @@ class MovieController {
             if (result.isEmpty()) {
                 const movie = await movieService.addWatchList({
                     movieId: req.body.movieId,
-                    status: req.body.status,
+                    statusId: req.body.statusId,
                     userId: req.idUser
                 })
                 res.send(movie)
@@ -57,7 +57,8 @@ class MovieController {
         try {
             const result = validationResult(req)
             if (result.isEmpty()) {
-                const movie = await movieService.changeStatusById(req.params.movieId, req.body.status)
+                const movie = await movieService.changeStatusById(req.params.movieId, req.body.statusId)
+                console.log(movie)
                 res.send(movie)
             } else {
                 res.send({
@@ -72,7 +73,7 @@ class MovieController {
         try {
             const result = validationResult(req)
             if (result.isEmpty()) {
-                const movie = await movieService.addSimilar(req.idUser, req.params.movieId, req.body.movieId)
+                const movie = await movieService.addSimilar(req.idUser, req.params.movieId, req.body.similarMovieId)
                 if (!movie) return res.send({
                     message: 'not added'
                 })
@@ -93,6 +94,10 @@ class MovieController {
             if (result.isEmpty()) {
                 //need to delete dublicate
                 const movies = await movieService.getSimilar(req.params.movieId)
+                // const filteredMovies = movies.sort((a, b) => +a['movie.id'] - +b['movie.id']).filter((item, index, array) => {
+                //    if(array[index - 1] && item['movie.id'] !== array[index - 1]['movie.id']) return item
+                //    if(index === 0) return item
+                // })
                 res.send(movies)
             } else {
                 res.send({

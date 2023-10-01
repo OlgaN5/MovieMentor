@@ -1,7 +1,8 @@
 const {
     Movie,
     WatchList,
-    SimilarMovie
+    SimilarMovie,
+    Status
 } = require('../models/associations')
 // const WatchList = require('../models/watchList')
 const accessToDatabase = require('../utils/accessToDatabase')
@@ -25,40 +26,46 @@ class MovieService {
     //     const movie = await accessToDatabase.readOne(Movie, conditions)
     //     return movie.id
     // }
-    async changeStatusById(idMovie, status) {
+    async changeStatusById(idMovie, statusId) { //?
+        // const conditions = {
+        //     title: status
+        // }
+        // const statusId = await accessToDatabase.findId(Status, conditions)
         const dataToChange = {
-            status: status
+            statusId
         }
         const movie = await accessToDatabase.updateById(WatchList, idMovie, dataToChange)
+        console.log(movie)
         return movie
     }
     async addSimilar(userId, movieId, similarMovieId) {
         const conditions = {
             movieId: movieId,
             userId: userId,
-            status: 'watched'
+            statusId: '2'
         }
-        const movie = await accessToDatabase.readOne(WatchList, conditions)
-        const similarMovie = await accessToDatabase.readOne(WatchList, {
+        // console.log('111111111111111111111111111111111111')
+
+        const movieFromWatchList = await accessToDatabase.readOne(WatchList, conditions)
+        const similarMovieFromWatchList = await accessToDatabase.readOne(WatchList, {
             ...conditions,
             movieId: similarMovieId
         })
-        if (!movie || !similarMovie) return null
+        
+        if (!movieFromWatchList || !similarMovieFromWatchList) return null
         return await accessToDatabase.create(SimilarMovie, {
             userId,
-            movieId,
-            similarMovieId
+            movieId:similarMovieId,
+            watchListId: movieFromWatchList.id
         })
     }
 
     async getSimilar(movieId) {
-        console.log(movieId)
         const conditions = {
             id: movieId
         }
         // const movie = await accessToDatabase.readOne(Movie, conditions)
         const movies = await accessToDatabase.readAllSimilar(conditions)
-        console.log('1',movies)
 
         return movies
         // console.log(Movie.prototype)

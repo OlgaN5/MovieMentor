@@ -17,16 +17,42 @@ const validationQuery = [
     query('movieName').notEmpty().escape().isString().trim()
 ]
 const validationParam = [
-    param('movieId').notEmpty().isString(),
+    param('movieId').notEmpty().isInt(),
 ]
 const validationStatus = [
     body('statusId').notEmpty().isInt()
 ]
 const validationBodyMovieId = [
-    body('similarMovieId').notEmpty().isString()
+    body('similarMovieId').notEmpty().isInt()
 ]
-
-
+/**
+ * @swagger
+ * /api/movies/add-status:
+ *   post:
+ *     tags: 
+ *       - Movie
+ *     summary: add status in database
+ *     security:
+ *       - bearerAuth: []
+ *     description: returns added status
+ *     requestBody:
+ *       description: status
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 default: watched 
+ *     responses:
+ *       '200':
+ *         description: text
+ *       '401':
+ *         description: text
+ */
+router.post('/add-status', authenticate, movieController.addStatus)
 /**
  * @swagger
  * components:
@@ -47,11 +73,11 @@ const validationBodyMovieId = [
  *       type: object
  *       properties:
  *         movieId: 
- *           type: string
+ *           type: int
  *           default: 1
  *         statusId:
- *           type: string
- *           default: want to watch
+ *           type: integer
+ *           default: 1
  * /api/movies/create:
  *   post:
  *     tags: 
@@ -140,8 +166,8 @@ router.post('/watchlist', validationStatus, authenticate, movieController.addWat
  *             type: object
  *             properties:
  *               statusId:
- *                 type: string
- *                 default: watched
+ *                 type: integer
+ *                 default: 1
  *     responses:
  *       '200': 
  *         description: text
@@ -170,7 +196,7 @@ router.patch('/watchList/:movieId', validationParam, validationStatus, authentic
  *             type: object
  *             properties: 
  *               similarMovieId:
- *                 type: string
+ *                 type: integer
  *                 default: 1
  *     responses:
  *       '200':

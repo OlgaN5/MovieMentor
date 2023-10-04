@@ -4,6 +4,21 @@ const {
     validationResult
 } = require('express-validator')
 class MovieController {
+    async addStatus(req,res){
+        try {
+            const result = validationResult(req)
+            if (result.isEmpty()) {
+                const status = await movieService.addStatus(req.body)
+                res.send(status)
+            } else {
+                res.send({
+                    errors: result.array()
+                })
+            }
+        } catch (e) {
+            Sentry.captureException(e)
+        }
+    }
     async add(req, res) {
         try {
             const result = validationResult(req)
@@ -38,6 +53,7 @@ class MovieController {
         try {
             const result = validationResult(req)
             if (result.isEmpty()) {
+                console.log('111111111111111')
                 const movie = await movieService.addWatchList({
                     movieId: req.body.movieId,
                     statusId: req.body.statusId,

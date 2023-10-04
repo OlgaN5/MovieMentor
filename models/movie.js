@@ -1,3 +1,14 @@
+
+// const pool = require('../config/database')
+// const movie = `CREATE TABLE movie(
+//     id SERIAL PRYMARY KEY,
+//     title varchar(255) NOT NULL,
+//     description varchar(255) NOT NULL,
+//     releaseDate TIMESTAMPTZ NOT NULL,
+// );`
+// pool.query(movie)
+// module.exports = movie
+
 const db = require('../config/database')
 const Sequelize = require('sequelize')
 const Movie = db.define('movies', {

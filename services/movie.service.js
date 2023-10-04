@@ -7,6 +7,14 @@ const {
 // const WatchList = require('../models/watchList')
 const accessToDatabase = require('../utils/accessToDatabase')
 class MovieService {
+    async addStatus({
+        title
+    }) {
+        const status = {
+            title
+        }
+        return await accessToDatabase.create(Status, status)
+    }
     async add(movie) {
         return await accessToDatabase.create(Movie, movie)
     }
@@ -39,23 +47,25 @@ class MovieService {
         return movie
     }
     async addSimilar(userId, movieId, similarMovieId) {
+        const id = accessToDatabase.findId(Status, {
+            title: 'watched'
+        })
         const conditions = {
             movieId: movieId,
             userId: userId,
-            statusId: '2'
+            statusId: id
         }
-        // console.log('111111111111111111111111111111111111')
 
         const movieFromWatchList = await accessToDatabase.readOne(WatchList, conditions)
         const similarMovieFromWatchList = await accessToDatabase.readOne(WatchList, {
             ...conditions,
             movieId: similarMovieId
         })
-        
+
         if (!movieFromWatchList || !similarMovieFromWatchList) return null
         return await accessToDatabase.create(SimilarMovie, {
             userId,
-            movieId:similarMovieId,
+            movieId: similarMovieId,
             watchListId: movieFromWatchList.id
         })
     }

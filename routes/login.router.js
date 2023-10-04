@@ -6,7 +6,7 @@ const {
 } = require('express-validator')
 const validationBody = [
     // body('email').notEmpty().escape().isEmail(),
-    body('login').notEmpty().escape().isString().isLength({ // login or email is optional?
+    body('login').notEmpty().escape().isString().isLength({// login or
         min: 3,
         max: 10
     }).withMessage('The login field must be between 3 and 10 characters long'),

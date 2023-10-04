@@ -9,6 +9,8 @@ const {
     sign
 } = require('jsonwebtoken')
 class AccessToDatabase {
+    // INSERT INTO user VALUES ($1,&2),[login,email,password]
+    // INSERT INTO movie VALUES ($1,&2),[login,email,password]
     async create(Model, value) {
         return await Model.create(value)
     }
@@ -19,22 +21,6 @@ class AccessToDatabase {
         })
         return element
     }
-    // async readAllSimilar(conditions) {
-    //     const movies = await WatchList.findAll({
-    //         where: conditions,
-    //         include: {
-    //             model: SimilarMovie,
-    //             include: {
-    //                 model: Movie,
-    //                 attributes: ['title']
-    //             },
-    //             attributes: [],
-    //         },
-    //         attributes: [],
-    //         raw: true
-    //     })
-    //     return movies
-    // }
     async readAllSimilar(conditions) {
         const movies = await SimilarMovie.findAll({
             include: {
@@ -45,7 +31,6 @@ class AccessToDatabase {
             attributes: [Sequelize.fn('DISTINCT', Sequelize.col('movieId'))],
             include: {
                 model: Movie,
-                // attributes: [Sequelize.fn('DISTINCT', Sequelize.col('id')), 'id']
             },
             raw: true
         })

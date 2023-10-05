@@ -9,13 +9,21 @@ const {
     sign
 } = require('jsonwebtoken')
 class AccessToDatabase {
-    // INSERT INTO user VALUES ($1,&2),[login,email,password]
-    // INSERT INTO movie VALUES ($1,&2),[login,email,password]
     async create(Model, value) {
-        return await Model.create(value)
+        const data = await Model.create(value)
+        console.log('дошло сюда')
+
+        return data
     }
     async readOne(Model, conditions) {
         const element = await Model.findOne({
+            where: conditions,
+            raw: true
+        })
+        return element
+    }
+    async readAll(Model, conditions) {
+        const element = await Model.findAll({
             where: conditions,
             raw: true
         })
@@ -37,7 +45,7 @@ class AccessToDatabase {
         return movies
     }
     async findId(Model, conditions) {
-        return Model.findOne({
+        return await Model.findOne({
             where: conditions,
             attributes: ['id'],
             raw: true
@@ -51,12 +59,5 @@ class AccessToDatabase {
             raw: true
         })
     }
-    // async getId(Model, nameProperty, valueProperty) {
-    //     return await Model.findOne({
-    //         where: {
-    //             [nameProperty]: valueProperty
-    //         }
-    //     }).id
-    // }
 }
 module.exports = new AccessToDatabase()

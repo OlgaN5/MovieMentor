@@ -9,6 +9,8 @@ class MovieController {
             const result = validationResult(req)
             if (result.isEmpty()) {
                 const status = await movieService.addStatus(req.body)
+                console.log('дошло сюда')
+
                 res.send(status)
             } else {
                 res.send({
@@ -39,6 +41,7 @@ class MovieController {
             const result = validationResult(req)
             if (result.isEmpty()) {
                 const movie = await movieService.search(req.query.movieName)
+                if (!movie) return res.send({message: 'there are not movies with this name'})
                 res.send(movie)
             } else {
                 res.send({

@@ -1,6 +1,3 @@
-// const pool = require('../config/database')
-// const status ='CREATE TABLE status '
-
 const db = require('../config/database')
 const Sequelize = require('sequelize')
 const Status = db.define('status', {

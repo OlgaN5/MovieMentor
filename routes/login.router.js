@@ -5,8 +5,7 @@ const {
     body
 } = require('express-validator')
 const validationBody = [
-    // body('email').notEmpty().escape().isEmail(),
-    body('login').notEmpty().escape().isString().isLength({// login or
+    body('login').notEmpty().escape().isString().isLength({
         min: 3,
         max: 10
     }).withMessage('The login field must be between 3 and 10 characters long'),
@@ -18,7 +17,8 @@ const validationBody = [
  *   post:
  *     tags: 
  *       - Login
- *     description: use to login user
+ *     description: gets login and password. Checks if such user is exist is system and returns token if everything ok
+ *     summary: use to get token and login user
  *     requestBody:
  *       description: user
  *       required: true
@@ -35,9 +35,9 @@ const validationBody = [
  *                 default: password
  *     responses:
  *       '200':
- *         description: text
- *       '401':
- *         description: text 
+ *         description: Logged in
+ *       '400':
+ *         description: Bad Request 
  */
 router.post('/', validationBody, loginController.login)
 

@@ -25,12 +25,12 @@ class registerController {
                 const isEmail = await registerService.findUserByConditions(conditionsEmail)
                 const isLogin = await registerService.findUserByConditions(conditionsLogin)
                 if (isEmail) {
-                    return res.send({
+                    return res.status(400).json({
                         message: 'email is exist'
                     })
                 }
                 if (isLogin) {
-                    return res.send({
+                    return res.status(400).json({
                         message: 'login is exist'
                     })
                 }
@@ -42,7 +42,8 @@ class registerController {
                 })
                 res.send(user)
             } else {
-                res.send({
+                res.status(400).json({
+                    message: 'invalid fields',
                     errors: result.array()
                 })
             }

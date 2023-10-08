@@ -1,6 +1,6 @@
 const db = require('../config/database')
 const Sequelize = require('sequelize')
-const Movie = db.define('movies', {
+const Movie = db.define('movie', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
